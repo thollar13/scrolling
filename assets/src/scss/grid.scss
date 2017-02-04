@@ -1,0 +1,83 @@
+@import "_variables";
+
+$breakpoint_widths: (
+	xs: 1,
+	sm: 767,
+	md: 960,
+	lg: 1140,
+	xl: 1400,
+);
+
+$breakpoints: (
+	xs: "only screen and (min-width: #{map-get($breakpoint_widths, 'xs')}px)",
+	sm: "only screen and (min-width: #{map-get($breakpoint_widths, 'sm')}px)",
+	md: "only screen and (min-width: #{map-get($breakpoint_widths, 'md')}px)",
+	lg: "only screen and (min-width: #{map-get($breakpoint_widths, 'lg')}px)",
+	xl: "only screen and (min-width: #{map-get($breakpoint_widths, 'xl')}px)",
+);
+
+.container {
+	position: relative;
+	clear: both;
+	margin: 0 auto;
+  @include outer-container;
+}
+.row {
+  overflow: auto;
+}
+
+
+@each $breakpoint, $breakpoint_def in $breakpoints {
+	@media #{map-get($breakpoints, $breakpoint)} {
+		// Set up zero-pads and zero-margins
+		.vm-#{$breakpoint}-top-0 { margin-top: 0; }
+		.vm-#{$breakpoint}-bottom-0 { margin-bottom: 0; }
+		.vp-#{$breakpoint}-top-0 { padding-top: 0; }
+		.vp-#{$breakpoint}-bottom-0 { padding-bottom: 0; }
+    .u-p-#{$breakpoint}-0 { padding: 0; }
+    .u-m-#{$breakpoint}-0 { margin: 0; }
+
+		// Grid scaffold
+    .col-#{$breakpoint}-omega {
+      @include omega();
+    }
+		@for $i from 1 through $grid-columns {
+			.col-#{$breakpoint}-#{$i} {
+				@include span-columns($i);
+			}
+			.col-#{$breakpoint}-offset-#{$i} {
+				@include shift($i);
+			}
+      .hp-#{$breakpoint}-#{$i} {
+        padding-left: pad-col($i of $grid-columns);
+        padding-right: pad-col($i of $grid-columns);
+      }
+      .hp-#{$breakpoint}-#{$i}-left {
+        padding-left: pad-col($i of $grid-columns);
+      }
+      .hp-#{$breakpoint}-#{$i}-right {
+        padding-right: pad-col($i of $grid-columns);
+      }
+			.vp-#{$breakpoint}-#{$i} {
+				padding-top: $vertical-pad-base * $i;
+				padding-bottom: $vertical-pad-base * $i;
+			}
+			.vm-#{$breakpoint}-#{$i} {
+				margin-top: $vertical-pad-base * $i;
+				margin-bottom: $vertical-pad-base * $i;
+			}
+			.vp-#{$breakpoint}-top-#{$i} {
+				padding-top: $vertical-pad-base * $i;
+			}
+			.vp-#{$breakpoint}-bottom-#{$i} {
+				padding-bottom: $vertical-pad-base * $i;
+			}
+			.vm-#{$breakpoint}-top-#{$i} {
+				margin-top: $vertical-pad-base * $i;
+			}
+			.vm-#{$breakpoint}-bottom-#{$i} {
+				margin-bottom: $vertical-pad-base * $i;
+			}
+		}
+	}
+}

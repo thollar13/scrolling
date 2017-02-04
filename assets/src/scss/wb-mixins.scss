@@ -1,0 +1,49 @@
+body {
+	font-smoothing: antialiased;
+}
+
+////// Showing Images
+img {
+	// Default: max width of an image set to 100%
+	max-width: 100%;
+}
+
+// vert center, full page, difficult element sizing things
+.abs-full {
+	position: absolute;
+	height: 100%;
+	width: 100%;
+	top: 0;
+	left: 0;
+	background-size: cover;
+}
+.u-vcenter {
+	position: absolute;
+	top: 50%;
+	transform: translateY(-50%);
+}
+.full-screen-fixed {
+	position: fixed;
+	width: 100vw;
+	height: 100vh;
+}
+
+.u-uppercase {
+	text-transform: uppercase;
+}
+.u-center {
+	text-align: center;
+}
+.txt-white {
+	color: white;
+}
+
+@function pad-col($shift: $columns of $container-columns) {
+  $n-columns: nth($shift, 1);
+  $parent-columns: container-shift($shift) !global;
+
+  $direction: get-direction($layout-direction, $default-layout-direction);
+  $opposite-direction: get-opposite-direction($direction);
+  
+  @return $n-columns * flex-grid(1, $parent-columns) + $n-columns * flex-gutter($parent-columns);
+}

@@ -1,0 +1,21 @@
+$grid-columns: 12;
+$vertical-pad-base: 14px;
+
+$button-base-vertical-padding: 12px;
+$button-base-horizontal-padding: 16px;
+
+////// Colors
+$primary: #005D78;
+$secondary: rgb(0, 185, 243);
+
+$darker-gray: #444;
+$dark-gray: lighten(#444, 10%);
+$gray: lighten(#444, 20%);
+$light-gray: lighten(#444, 30%);
+$lighter-gray: lighten(#444, 40%);
+
+$body-font: "HelveticaNeue", "Helvetica Neue", Helvetica, Arial, sans-serif;
+$body-line-height: 1.6;
+$body-font-size: 1.75em;
+$body-color: $gray;
+$grid_breakpoint_space: 40;

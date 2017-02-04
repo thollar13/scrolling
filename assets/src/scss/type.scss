@@ -1,0 +1,80 @@
+
+@font-face {
+  font-family: 'Lora-Bold';
+  src: url('../../fonts/Lora-Bold.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lora-BoldItalic';
+  src: url('../../fonts/Lora-BoldItalic.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Lora-Italic';
+  src: url('../../fonts/Lora-Italic.ttf') format('truetype');
+}
+@font-face {
+  font-family: 'Lora-Regular';
+  src: url('../../fonts/Lora-Regular.ttf') format('truetype');
+}
+
+@font-face {
+  font-family: 'Nothing';
+  src: url('../../fonts/NothingYouCouldSay.ttf') format('truetype');
+}
+
+/* Typography
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+$headers: (h1,h2,h3,h4,h5,h6);
+h1, h2, h3, h4, h5, h6 { 
+  margin-top: 0;
+  margin-bottom: 2rem;
+  font-weight: 600; 
+  font-family: 'Lora-Regular';
+}
+
+@for $i from 1 to 6 {
+  h#{$i} {
+    font-size: modular-scale((7 - $i)/7 * 4.5);
+    line-height: 1.2 + ($i/10);
+  }
+}
+
+@media (min-width: 550px) {
+  @for $i from 1 to 6 {
+    h#{$i} {
+      font-size: modular-scale((7 - $i)/7 * 6);
+      line-height: 1.2 + ($i/10);
+    }
+  }
+}
+
+p {
+  margin-top: 0; }
+
+
+/* Links
+–––––––––––––––––––––––––––––––––––––––––––––––––– */
+a { 
+  color: $primary; }
+a:hover { 
+  color: darken($primary, 10%); }
+
+.uc, .u-t-uc {
+  text-transform: uppercase;
+  letter-spacing: .1em;
+}
+
+.u-text, .text {
+  &-left { text-align: left; }
+  &-right { text-align: right; }
+  &-center { text-align: center; }
+}
+.u-floatright { float: right; }
+.u-floatleft { float: left; }
+
+.u-za {
+  margin: 0 auto;
+}
+
+

@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<svg width="678px" height="276px" viewBox="0 0 678 276" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns">
+    <!-- Generator: Sketch 3.3 (11970) - http://www.bohemiancoding.com/sketch -->
+    <title>Oval 1 + Rectangle 1 + Line + Granular Technologie</title>
+    <desc>Created with Sketch.</desc>
+    <defs></defs>
+    <g id="Page-1" stroke="none" stroke-width="1" fill="none" fill-rule="evenodd" sketch:type="MSPage">
+        <g id="Oval-1-+-Rectangle-1-+-Line-+-Granular-Technologie" sketch:type="MSLayerGroup" transform="translate(3.000000, 3.000000)">
+            <g id="Oval-1-+-Rectangle-1" sketch:type="MSShapeGroup">
+                <ellipse id="Oval-1" stroke="#005D78" stroke-width="5" cx="97.962574" cy="97.4083719" rx="97.962574" ry="97.4083719"></ellipse>
+                <rect id="Rectangle-1" fill="#FFFFFF" transform="translate(147.788366, 149.077160) rotate(-45.000000) translate(-147.788366, -149.077160) " x="33.7801979" y="88.0910494" width="228.016336" height="121.972222"></rect>
+            </g>
+            <g id="Line-+-Granular-Technologie" transform="translate(11.823069, 11.858410)">
+                <path d="M184.946584,0.847029321 L0.844504949,182.111304" id="Line" stroke="#FFFFFF" stroke-width="5" stroke-linecap="square" sketch:type="MSShapeGroup"></path>
+                <text id="Granular-Technologie" sketch:type="MSTextLayer" font-family="DYMO Symbols" font-size="60.8043563" font-weight="normal" fill="#005D78">
+                    <tspan x="57.4263365" y="107.515818">Granular Technologies</tspan>
+                </text>
+            </g>
+        </g>
+    </g>
+</svg>
