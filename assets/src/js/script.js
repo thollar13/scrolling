@@ -69,47 +69,111 @@
 				$('body').css('height', divPosition[divPosition.length-1]['bottom']+windowHeight+'px');
 			
 			
-				$(window).scroll(function() {
-					
-				  var currentPosition = $(document).scrollTop();
-				  var windowHeight = $(window).height();
-			    var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container');
-			    
-			    // console.log(currentPosition);
+				var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"
+				$(window).bind(mousewheelevt, function(e){
 
-			    if(looped == 0) {
-			    	totalHeight = currIndex.height() + totalHeight;
-			    	divLength = divLength - 1;
-			    	looped = 1;
-			    }
+				    var evt = window.event || e
+				    evt = evt.originalEvent ? evt.originalEvent : evt; 
+				    var delta = evt.detail ? evt.detail*(-40) : evt.wheelDelta
 
-			    if(currentPosition < divPosition[counter]['scrollAt']) {
-			    	$(currIndex).css('top', (divPosition[counter]['top'] - currentPosition)+'px');
-			    } 
-			    else {
-			    	console.log("top: " + divPosition[counter+1]['top']);
-			    	console.log("currentpos :" + currentPosition);
-			    	console.log("window : "+windowHeight);
-			    	var fade = (divPosition[counter+1]['top']-currentPosition)/windowHeight;
-			    	var yAxis = Math.abs($('.active').first().height());
-			    	console.log(fade);
-			    	console.log("ad"+(divPosition[counter+1]['scrollAt']-currentPosition));
-			    	$('.scroll-overlay').css('opacity', fade);
-			    	$('.active').first().css('transform', 'translateY(' + ((totalHeight - windowHeight)-currentPosition) + 'px)');
-			    }
+				    var currentPosition = $(document).scrollTop();
+	      	  var windowHeight = $(window).height();
+	          var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container');
 
-			   	if(currentPosition > totalHeight) {
-			   		$('.scroll-item').eq(counter).css('top', -(windowHeight)+'px').removeClass('active');
-			   		$('.active').first().next().addClass('active');
-			   		$('.scroll-overlay').css({
-			   			opacity: 1,
-			   			zIndex: divLength
-			   		});
-			   		counter = counter + 1;
-			   		looped = 0;
-			   	}
+				    if(delta > 0) {
 
+		          if(looped == 0) {
+		          	totalHeight = currIndex.height() + totalHeight;
+		          	divLength = divLength + 1;
+		          	looped = 1;
+		          }
+
+		          if(currentPosition < divPosition[counter]['scrollAt']) {
+		          	$(currIndex).css('top', -(divPosition[counter]['top'] + currentPosition)+'px');
+		          	if(currentPosition < divPosition[counter]['top']) {
+		          		$('.active').first().css('transform', 'translateY(' + (currentPosition-divPosition[counter]['scrollAt']) + 'px)');
+		          	}
+		          } else {
+		          	$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['scrollAt'] - currentPosition) + 'px)');
+		          }
+
+		         	if(currentPosition > totalHeight) {
+		         		$('.scroll-item').eq(counter).css('top', (windowHeight)+'px').removeClass('active');
+		         		$('.active').first().prev().addClass('active');
+		         		$('.scroll-overlay').css({
+		         			opacity: 1,
+		         			zIndex: divLength
+		         		});
+		         		counter = counter + 1;
+		         		looped = 0;
+		         	}
+
+				    } else {
+
+		          if(looped == 0) {
+		          	totalHeight = currIndex.height() + totalHeight;
+		          	divLength = divLength - 1;
+		          	looped = 1;
+		          }
+
+		          if(currentPosition < divPosition[counter]['scrollAt']) {
+		          	$(currIndex).css('top', (divPosition[counter]['top'] - currentPosition)+'px');
+		          } 
+		          else {
+		          	var fade = (divPosition[counter+1]['top']-currentPosition)/windowHeight;
+		          	$('.scroll-overlay').css('opacity', fade);
+		          	$('.active').first().css('transform', 'translateY(' + ((totalHeight - windowHeight)-currentPosition) + 'px)');
+		          }
+
+		         	if(currentPosition > totalHeight) {
+		         		$('.scroll-item').eq(counter).css('top', -(windowHeight)+'px').removeClass('active');
+		         		$('.active').first().next().addClass('active');
+		         		$('.scroll-overlay').css({
+		         			opacity: 1,
+		         			zIndex: divLength
+		         		});
+		         		counter = counter + 1;
+		         		looped = 0;
+		         	}
+
+				    }   
 				});
+
+				// $(window).scroll(function() {
+					
+				//   var currentPosition = $(document).scrollTop();
+				//   var windowHeight = $(window).height();
+			 //    var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container');
+			    
+			 //    // console.log(currentPosition);
+
+			 //    if(looped == 0) {
+			 //    	totalHeight = currIndex.height() + totalHeight;
+			 //    	divLength = divLength - 1;
+			 //    	looped = 1;
+			 //    }
+
+			 //    if(currentPosition < divPosition[counter]['scrollAt']) {
+			 //    	$(currIndex).css('top', (divPosition[counter]['top'] - currentPosition)+'px');
+			 //    } 
+			 //    else {
+			 //    	var fade = (divPosition[counter+1]['top']-currentPosition)/windowHeight;
+			 //    	$('.scroll-overlay').css('opacity', fade);
+			 //    	$('.active').first().css('transform', 'translateY(' + ((totalHeight - windowHeight)-currentPosition) + 'px)');
+			 //    }
+
+			 //   	if(currentPosition > totalHeight) {
+			 //   		$('.scroll-item').eq(counter).css('top', -(windowHeight)+'px').removeClass('active');
+			 //   		$('.active').first().next().addClass('active');
+			 //   		$('.scroll-overlay').css({
+			 //   			opacity: 1,
+			 //   			zIndex: divLength
+			 //   		});
+			 //   		counter = counter + 1;
+			 //   		looped = 0;
+			 //   	}
+
+				// });
 
 			}
 		}
