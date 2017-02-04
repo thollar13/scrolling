@@ -56,6 +56,7 @@
 
 																				// push to an array of objects
 																				divPosition.push({
+																								index: i,
 																								height: $(this).height(),
 																								top: top,
 																								scrollAt: scrollAt,
@@ -88,24 +89,31 @@
 																								}
 
 																								if (currentPosition < divPosition[counter]['scrollAt']) {
-																												$(currIndex).css('top', -(divPosition[counter]['top'] + currentPosition) + 'px');
+																												$(currIndex).css('top', divPosition[counter]['bottom'] - (divPosition[counter]['top'] + currentPosition) + 'px');
 																												if (currentPosition < divPosition[counter]['top']) {
 																																$('.active').first().css('transform', 'translateY(' + (currentPosition - divPosition[counter]['scrollAt']) + 'px)');
 																												}
 																								} else {
-																												var fade = (divPosition[counter + 1]['bottom'] - currentPosition) / windowHeight - 2;
-																												$('.scroll-overlay').css('opacity', fade);
-																												$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['scrollAt'] - currentPosition) + 'px)');
+																												// divPosition[counter]['']-windowHeight
+																												// var fade = ((divPosition[counter+1]['bottom']-currentPosition)/windowHeight) - 2;
+																												// $('.scroll-overlay').css('opacity', fade);
+																												var yAxis = divPosition[counter]['scrollAt'] - currentPosition;
+																												if (yAxis < 0) {
+																																$('.active').first().css('transform', 'translateY(' + yAxis + 'px)');
+																												}
 																								}
 
-																								if (currentPosition > totalHeight) {
-																												$('.scroll-item').eq(counter).css('top', windowHeight + 'px').removeClass('active');
-																												$('.active').first().prev().addClass('active');
+																								if (currentPosition < divPosition[counter]['top']) {
+																												$('.active').first().css('top', windowHeight - 0 + 'px');
+																												$('.active').first().prev('.scroll-item').addClass('active');
+																												$('.active').last().removeClass('active');
+																												$('.active').first().next('.scroll-item').addClass('active');
+
 																												$('.scroll-overlay').css({
 																																opacity: 0,
 																																zIndex: divLength - counter
 																												});
-																												counter = counter - 1;
+																												counter = counter + 1;
 																												looped = 0;
 																								}
 																				} else {
@@ -125,6 +133,10 @@
 																								}
 
 																								if (currentPosition > totalHeight) {
+																												// $('body').addClass('stop-scrolling');
+																												// setTimeout(function() {
+																												// 	$('body').removeClass('stop-scrolling');
+																												// }, 1000);
 																												$('.scroll-item').eq(counter).css('top', -windowHeight + 'px').removeClass('active');
 																												$('.active').first().next().addClass('active');
 																												$('.scroll-overlay').css({
