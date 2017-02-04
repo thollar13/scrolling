@@ -6,7 +6,7 @@
     <div class="scroll-wrap__container">
       <div class="main-container">
         <div class="scroll-overlay"></div>
-        <div class="scroll-item" style="z-index: 6;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1400px;">
               <h1>Testing</h1>
@@ -55,7 +55,7 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="z-index: 5; background: red;">
+        <div class="scroll-item" style="background: red;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1500px;">
               <h1>Testing</h1>
@@ -104,7 +104,7 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="z-index: 4; background: green;">
+        <div class="scroll-item" style="background: green;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1400px;">
               <h1>Testing</h1>
@@ -153,7 +153,7 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="z-index: 3; background: blue;">
+        <div class="scroll-item" style="background: blue;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1400px;">
               <h1>Testing</h1>
@@ -202,7 +202,7 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="z-index: 2; background: blue;">
+        <div class="scroll-item" style="background: blue;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1400px;">
               <h1>Testing</h1>
@@ -251,7 +251,7 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="z-index: 1; background: blue;">
+        <div class="scroll-item" style="background: blue;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="height: 1400px;">
               <h1>Testing</h1>

@@ -3,191 +3,162 @@
 	var wb = {
 		sampleFunction: {
 			test: function() {
-				return true;
+				return true
 			},
 			run: function() {
 
-				var windowHeight = $(window).height();
-				var numberOfItems = $('.scroll-item').length;
-				$('.scroll-item').first().addClass('active').next().addClass('active');
-
-				setResizes();
+				setResizes()
 
 				$(window).resize(function() {
-					setResizes();				  
+					setResizes();			  
 				});
 
 				function setResizes() {
-					var windowHeight = $(window).height();
-					var windowWidth = $(window).width();
-					$('.scroll-viewer').css('height', windowHeight+"px");
-					$('.main-container').css('width', windowWidth+"px");
+					$('.scroll-viewer').css('height', windowHeight()+"px")
+					$('.main-container').css('width', $(window).width()+"px")
 
-					var itemHeight = $('.active').first().height();
+					var itemHeight = $('.active').first().height()
 				}
-				
-				var counter = 0;
-				var totalHeight = 0;
-				var looped = 0;
-				
-				var startAnimationPosition = [];
-				var itemBottom = [];
 
-				console.log(windowHeight);
-				
+				function windowHeight() {
+					return $(window).height()
+				}
+
+				function scrollPosition() {
+					return $(document).scrollTop()
+				}
+
+				var numberOfItems = $('.scroll-item').length
+				$('.scroll-item').first().addClass('active').next().addClass('active')		
+				var counter = 0, totalHeight = 0, looped = 0
 
 				//
 				// GET WHERE ITEMS NEED TO START FADE //
 				//
 
-				var divPosition = [],
-						top = 0, 
-						bottom = 0;			
-				$('.scroll-item__container').each(function(i) {
-					var scrollAt = $(this).height() - windowHeight;
+				var divPosition = [], top = 0, bottom = 0, height = 0
 
+				$('.scroll-item__container').each(function(i) {
+					height = $(this).height()
+					var scrollAt = height - windowHeight()
 					// make sure have defined lengths
 					if(divPosition.length) {
-						top = divPosition[i-1]['height'] + divPosition[i-1]['top'];
-						bottom = $(this).height() + top;
-						scrollAt = bottom - windowHeight;
+						top = divPosition[i-1]['height'] + divPosition[i-1]['top']
+						bottom = height + top
+						scrollAt = bottom - windowHeight()
+						height = height
+					} else {
+						height = 0 + height
+						bottom = 0 + height
 					}
 
 					// push to an array of objects
 					divPosition.push({
-						index: i,
-						height: $(this).height(),
+						index: $('.scroll-item').length - i,
+						height: height,
 						top: top,
 						scrollAt: scrollAt,
-						bottom: bottom
+						bottom: bottom,
+						scrollUpAt: top + windowHeight(),
 					})
 					
+				})
+
+				// set z-indexs
+				$.each(divPosition,function(i) {
+					$('.scroll-item').eq(i).css('z-index', divPosition[i]['index'])
 				});
+				$('.scroll-overlay').css('z-index', divPosition[0]['index'])
 
-				var divLength = divPosition.length;
-				// console.log(divPosition);
+				var divLength = divPosition.length
+				$('body').css('height', divPosition[divLength-1]['bottom']+'px')
+			
 
-				$('body').css('height', divPosition[divPosition.length-1]['bottom']+windowHeight+'px');
-			
-			
+				//// SCROLL EVENTS
 				var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"
 				$(window).bind(mousewheelevt, function(e){
 
 				    var evt = window.event || e
-				    evt = evt.originalEvent ? evt.originalEvent : evt; 
+				    evt = evt.originalEvent ? evt.originalEvent : evt
 				    var delta = evt.detail ? evt.detail*(-40) : evt.wheelDelta
 
-				    var currentPosition = $(document).scrollTop();
-	      	  var windowHeight = $(window).height();
-	          var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container');
+	          var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container')
 
 				    if(delta > 0) {
 
-		          if(looped == 0) {
-		          	totalHeight = currIndex.height() + totalHeight;
-		          	divLength = divLength + 1;
-		          	looped = 1;
-		          }
-
-		          if(currentPosition < divPosition[counter]['scrollAt']) {
-		          	$(currIndex).css('top', (divPosition[counter]['bottom'] - (divPosition[counter]['top'] + currentPosition))+'px');
-		          	if(currentPosition < divPosition[counter]['top']) {
-		          		$('.active').first().css('transform', 'translateY(' + (currentPosition-divPosition[counter]['scrollAt']) + 'px)');
+				    	// make sure we're not at the top of the page
+		          if(scrollPosition() > 0 ) {
+		          	
+		          	if(looped == 0) {
+		          		looped = 1
 		          	}
-		          } else {
-		          	// divPosition[counter]['']-windowHeight
-		          	// var fade = ((divPosition[counter+1]['bottom']-currentPosition)/windowHeight) - 2;
-		          	// $('.scroll-overlay').css('opacity', fade);
-		          	var yAxis = (divPosition[counter]['scrollAt'] - currentPosition);
-		          	if(yAxis < 0) {
-		          		$('.active').first().css('transform', 'translateY(' + yAxis + 'px)');
-		          	}
-		          }
 
-		          if(currentPosition < divPosition[counter]['top']) {
-		          		$('.active').first().css('top', (windowHeight-0)+'px');
-		          		$('.active').first().prev('.scroll-item').addClass('active');
-		          		$('.active').last().removeClass('active');
-		          		$('.active').first().next('.scroll-item').addClass('active');
+		          	if((scrollPosition() > divPosition[counter]['top']) && (scrollPosition() < divPosition[counter]['bottom']))  {
+		          		// is above the scrollAt position
+		          		if(scrollPosition() < divPosition[counter]['scrollAt']) {
+		          			$(currIndex).css('top', (divPosition[counter]['bottom'] - (divPosition[counter]['height'] + scrollPosition()))+'px')
+		          			if(scrollPosition() < divPosition[counter]['top']) {
+		          				$('.active').first().css('transform', 'translateY(' + (scrollPosition()-divPosition[counter]['scrollAt']) + 'px)')
+		          			}
+		          		} else {
+		          			var yAxis = (divPosition[counter]['scrollAt'] - scrollPosition())
+		          			if(yAxis < 0) {
+		          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
+		          			}
+		          		}
+	          		} else {
+	          			//// is below the scrollAt position
+	          			var active = $('.active')
 
-		          		$('.scroll-overlay').css({
-		          			opacity: 0,
-		          			zIndex: divLength - counter
-		          		});
-		          		counter = counter + 1;
-		          		looped = 0;
-		          }
+	          			active.first().prev('.scroll-item').addClass('active')
+	          			active.last().removeClass('active')
+	          			active.first().next('.scroll-item').removeClass('active')
+
+	          			if(scrollPosition() < divPosition[counter]['bottom']) {
+	          				counter = counter - 1
+	          				$('.scroll-overlay').css({
+	          					opacity: 0,
+	          					zIndex: divLength-counter
+	          				})
+	          				looped = 0
+	          			} 
+	          			console.log("looped :"+looped);
+	          			console.log("counter :"+counter);
+	          			
+	          		}
+
+							}		          
 
 				    } else {
 
 		          if(looped == 0) {
-		          	totalHeight = currIndex.height() + totalHeight;
-		          	divLength = divLength - 1;
-		          	looped = 1;
+		          	totalHeight = currIndex.height() + totalHeight
+		          	divLength = divLength - 1
+		          	looped = 1
 		          }
 
-		          if(currentPosition < divPosition[counter]['scrollAt']) {
-		          	$(currIndex).css('top', (divPosition[counter]['top'] - currentPosition)+'px');
+		          if(scrollPosition() < divPosition[counter]['scrollAt']) {
+		          	$(currIndex).css('top', (divPosition[counter]['top'] - scrollPosition())+'px')
 		          } 
 		          else {
-		          	var fade = (divPosition[counter+1]['top']-currentPosition)/windowHeight;
-		          	$('.scroll-overlay').css('opacity', fade);
-		          	$('.active').first().css('transform', 'translateY(' + ((totalHeight - windowHeight)-currentPosition) + 'px)');
+		          	var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
+		          	$('.scroll-overlay').css('opacity', fade)
+		          	$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['scrollAt']-scrollPosition()) + 'px)')
 		          }
 
-		         	if(currentPosition > totalHeight) {
-		         		// $('body').addClass('stop-scrolling');
-		         		// setTimeout(function() {
-		         		// 	$('body').removeClass('stop-scrolling');
-		         		// }, 1000);
-		         		$('.scroll-item').eq(counter).css('top', -(windowHeight)+'px').removeClass('active');
-		         		$('.active').first().next().addClass('active');
-		         		$('.scroll-overlay').css({
-		         			opacity: 1,
-		         			zIndex: divLength
-		         		});
-		         		counter = counter + 1;
-		         		looped = 0;
+		         	if(scrollPosition() > divPosition[counter]['bottom']) {
+		         		$('.scroll-item').eq(counter).css('top', -(windowHeight())+'px').removeClass('active')
+		         		$('.active').first().next().addClass('active')
+		         		// $('.scroll-overlay').css({
+		         		// 	opacity: 1,
+		         		// 	zIndex: divLength
+		         		// });
+		         		counter = counter + 1
+		         		looped = 0
 		         	}
 
 				    }   
 				});
-
-				// $(window).scroll(function() {
-					
-				//   var currentPosition = $(document).scrollTop();
-				//   var windowHeight = $(window).height();
-			 //    var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container');
-			    
-			 //    // console.log(currentPosition);
-
-			 //    if(looped == 0) {
-			 //    	totalHeight = currIndex.height() + totalHeight;
-			 //    	divLength = divLength - 1;
-			 //    	looped = 1;
-			 //    }
-
-			 //    if(currentPosition < divPosition[counter]['scrollAt']) {
-			 //    	$(currIndex).css('top', (divPosition[counter]['top'] - currentPosition)+'px');
-			 //    } 
-			 //    else {
-			 //    	var fade = (divPosition[counter+1]['top']-currentPosition)/windowHeight;
-			 //    	$('.scroll-overlay').css('opacity', fade);
-			 //    	$('.active').first().css('transform', 'translateY(' + ((totalHeight - windowHeight)-currentPosition) + 'px)');
-			 //    }
-
-			 //   	if(currentPosition > totalHeight) {
-			 //   		$('.scroll-item').eq(counter).css('top', -(windowHeight)+'px').removeClass('active');
-			 //   		$('.active').first().next().addClass('active');
-			 //   		$('.scroll-overlay').css({
-			 //   			opacity: 1,
-			 //   			zIndex: divLength
-			 //   		});
-			 //   		counter = counter + 1;
-			 //   		looped = 0;
-			 //   	}
-
-				// });
 
 			}
 		}

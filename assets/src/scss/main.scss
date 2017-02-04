@@ -57,7 +57,7 @@
         overflow: visible;
     }
 }
-.active { top: 0; }
+.active { top: 0 !important; }
 
 .stop-scrolling {
   height: 100%;
