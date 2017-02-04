@@ -79,6 +79,7 @@
 				var divLength = divPosition.length;
 				$('body').css('height', divPosition[divLength - 1]['bottom'] + 'px');
 
+				var overlay = 6;
 				//// SCROLL EVENTS
 				var mousewheelevt = /Firefox/i.test(navigator.userAgent) ? "DOMMouseScroll" : "mousewheel";
 				$(window).bind(mousewheelevt, function (e) {
@@ -110,6 +111,8 @@
 									if (yAxis < 0) {
 										$('.active').first().css('transform', 'translateY(' + yAxis + 'px)');
 									}
+									var fade = (divPosition[counter + 1]['top'] - scrollPosition()) / windowHeight();
+									$('.scroll-overlay').css('opacity', fade);
 								}
 							} else {
 								//// is below the scrollAt position
@@ -120,12 +123,13 @@
 								active.first().next('.scroll-item').removeClass('active');
 
 								if (scrollPosition() < divPosition[counter]['bottom']) {
+									console.log("div length :" + divLength);
 									counter = counter - 1;
+									looped = 0;
 									$('.scroll-overlay').css({
 										opacity: 0,
-										zIndex: divLength - counter
+										zIndex: overlay - counter
 									});
-									looped = 0;
 								}
 								console.log("looped :" + looped);
 								console.log("counter :" + counter);
@@ -150,12 +154,12 @@
 						if (scrollPosition() > divPosition[counter]['bottom']) {
 							$('.scroll-item').eq(counter).css('top', -windowHeight() + 'px').removeClass('active');
 							$('.active').first().next().addClass('active');
-							// $('.scroll-overlay').css({
-							// 	opacity: 1,
-							// 	zIndex: divLength
-							// });
 							counter = counter + 1;
 							looped = 0;
+							$('.scroll-overlay').css({
+								opacity: 1,
+								zIndex: overlay - counter
+							});
 						}
 					}
 				});
