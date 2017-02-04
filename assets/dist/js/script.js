@@ -93,6 +93,8 @@
 																																$('.active').first().css('transform', 'translateY(' + (currentPosition - divPosition[counter]['scrollAt']) + 'px)');
 																												}
 																								} else {
+																												var fade = (divPosition[counter + 1]['bottom'] - currentPosition) / windowHeight - 2;
+																												$('.scroll-overlay').css('opacity', fade);
 																												$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['scrollAt'] - currentPosition) + 'px)');
 																								}
 
@@ -100,10 +102,10 @@
 																												$('.scroll-item').eq(counter).css('top', windowHeight + 'px').removeClass('active');
 																												$('.active').first().prev().addClass('active');
 																												$('.scroll-overlay').css({
-																																opacity: 1,
-																																zIndex: divLength
+																																opacity: 0,
+																																zIndex: divLength - counter
 																												});
-																												counter = counter + 1;
+																												counter = counter - 1;
 																												looped = 0;
 																								}
 																				} else {
