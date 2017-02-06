@@ -42,7 +42,7 @@ gulp.task('dist-sass', function () {
 gulp.task('dist-js', function () {
 
   console.log("Building JavaScript.");
-  gulp.src(['./assets/src/js/cookie.js', './assets/src/js/script.js'])
+  gulp.src(['./assets/src/js/iscroll-lite.js', './assets/src/js/script.js'])
       .pipe(sourcemaps.init())
       .pipe(tasks.concat('./assets/dist/js/script.js'))
       .pipe(eslint({

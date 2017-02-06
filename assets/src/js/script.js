@@ -7,6 +7,11 @@
 			},
 			run: function() {
 
+				/// force reload to top of the page
+				$(document).ready(function(){
+				    $(this).scrollTop(0);
+				});
+
 				setResizes()
 
 				$(window).resize(function() {
@@ -16,8 +21,6 @@
 				function setResizes() {
 					$('.scroll-viewer').css('height', windowHeight()+"px")
 					$('.main-container').css('width', $(window).width()+"px")
-
-					var itemHeight = $('.active').first().height()
 				}
 
 				function windowHeight() {
@@ -28,20 +31,19 @@
 					return $(document).scrollTop()
 				}
 
-				var numberOfItems = $('.scroll-item').length
 				$('.scroll-item').first().addClass('active').next().addClass('active')		
-				var counter = 0, totalHeight = 0, looped = 0
 
-				//
-				// GET WHERE ITEMS NEED TO START FADE //
-				//
-
-				var divPosition = [], top = 0, bottom = 0, height = 0
+				//// GET WHERE ITEMS NEED TO START FADE ////
+				var divPosition = [], 
+						top = 0, 
+						bottom = 0, 
+						height = 0, 
+						counter = 0
 
 				$('.scroll-item__container').each(function(i) {
 					height = $(this).height()
 					var scrollAt = height - windowHeight()
-					// make sure have defined lengths
+					//// MAKE SURE WE HAVE DEFINITIONS
 					if(divPosition.length) {
 						top = divPosition[i-1]['height'] + divPosition[i-1]['top']
 						bottom = height + top
@@ -52,7 +54,7 @@
 						bottom = 0 + height
 					}
 
-					// push to an array of objects
+					//// PUSH VALUES TO ARRAY OF OBJETS ////
 					divPosition.push({
 						index: $('.scroll-item').length - i,
 						height: height,
@@ -64,17 +66,22 @@
 					
 				})
 
-				// set z-indexs
+				console.log(divPosition)
+
+				//// SET DYNAMIC Z-INDEXS ////
 				$.each(divPosition,function(i) {
 					$('.scroll-item').eq(i).css('z-index', divPosition[i]['index'])
 				});
+				//// SET OVERLAY TO FIRST SCROLL ITEMS INDEX ////
 				$('.scroll-overlay').css('z-index', divPosition[0]['index'])
 
-				var divLength = divPosition.length
-				$('body').css('height', divPosition[divLength-1]['bottom']+'px')
+				//// SET OVERALL BODY HEIGHT TO BE ABLE TO SCROLL ////
+				$('body').css('height', divPosition[divPosition.length-1]['bottom']+'px')
 			
-				var overlay = 6;
-				//// SCROLL EVENTS
+				//// SET OVERLAY POSITION COUNTER ////
+				var overlay = divPosition[0]['index'];
+
+				//// SCROLL EVENTS ////
 				var mousewheelevt = (/Firefox/i.test(navigator.userAgent)) ? "DOMMouseScroll" : "mousewheel"
 				$(window).bind(mousewheelevt, function(e){
 
@@ -83,25 +90,36 @@
 				    var delta = evt.detail ? evt.detail*(-40) : evt.wheelDelta
 
 	          var currIndex = $('.scroll-item').eq(counter).find('.scroll-item__container')
+	          
+	          var scroll_At = divPosition[counter]['scrollAt'],
+	          		scroll_Bottom = divPosition[counter]['bottom'],
+	          		scroll_Height = divPosition[counter]['height'],
+	          		scroll_Top = divPosition[counter]['top']
+
+	          var active = $('.active')
+
+	          console.log(scrollPosition())
 
 				    if(delta > 0) {
 
 				    	// make sure we're not at the top of the page
 		          if(scrollPosition() > 0 ) {
-		          	
-		          	if(looped == 0) {
-		          		looped = 1
-		          	}
 
-		          	if((scrollPosition() > divPosition[counter]['top']) && (scrollPosition() < divPosition[counter]['bottom']))  {
+		          	if((scrollPosition() > scroll_Top) && (scrollPosition() < scroll_Bottom))  {
 		          		// is above the scrollAt position
-		          		if(scrollPosition() < divPosition[counter]['scrollAt']) {
-		          			$(currIndex).css('top', (divPosition[counter]['bottom'] - (divPosition[counter]['height'] + scrollPosition()))+'px')
-		          			if(scrollPosition() < divPosition[counter]['top']) {
-		          				$('.active').first().css('transform', 'translateY(' + (scrollPosition()-divPosition[counter]['scrollAt']) + 'px)')
+		          		if(scrollPosition() < scroll_At) {
+
+		          			if(scrollPosition() < scroll_Top) {
+		          				$('.active').first().css('transform', 'translateY(' + (scrollPosition()-scroll_Top) + 'px)')
 		          			}
+
+          					$('.active').first().css('transform', 'translateY(0px)')
+	          				$(currIndex).css('top', 0)
+
+
 		          		} else {
-		          			var yAxis = (divPosition[counter]['scrollAt'] - scrollPosition())
+		          			$('.active').first().css('top', 0)
+		          			var yAxis = (scroll_At - scrollPosition())
 		          			if(yAxis < 0) {
 		          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
 		          			}
@@ -110,38 +128,26 @@
 		          		}
 	          		} else {
 	          			//// is below the scrollAt position
-	          			var active = $('.active')
 
 	          			active.first().prev('.scroll-item').addClass('active')
 	          			active.last().removeClass('active')
 	          			active.first().next('.scroll-item').removeClass('active')
 
-	          			if(scrollPosition() < divPosition[counter]['bottom']) {
-	          				console.log("div length :"+divLength)
+	          			if(scrollPosition() < scroll_Bottom) {
 	          				counter = counter - 1
-	          				looped = 0
 	          				$('.scroll-overlay').css({
 	          					opacity: 0,
 	          					zIndex: overlay - counter
 	          				})
 	          			} 
-	          			console.log("looped :"+looped);
-	          			console.log("counter :"+counter);
-	          			
 	          		}
 
 							}		          
 
 				    } else {
 
-		          if(looped == 0) {
-		          	totalHeight = currIndex.height() + totalHeight
-		          	divLength = divLength - 1
-		          	looped = 1
-		          }
-
 		          if(scrollPosition() < divPosition[counter]['scrollAt']) {
-		          	$(currIndex).css('top', (divPosition[counter]['top'] - scrollPosition())+'px')
+		          	// $(currIndex).css('top', (divPosition[counter]['top'] - scrollPosition())+'px')
 		          } 
 		          else {
 		          	var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
@@ -153,7 +159,6 @@
 		         		$('.scroll-item').eq(counter).css('top', -(windowHeight())+'px').removeClass('active')
 		         		$('.active').first().next().addClass('active')
 		         		counter = counter + 1
-		         		looped = 0
 		         		$('.scroll-overlay').css({
 		         			opacity: 1,
 		         			zIndex: overlay - counter
