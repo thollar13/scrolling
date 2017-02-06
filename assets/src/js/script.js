@@ -105,6 +105,14 @@
 		          		$('.active').first().css('top', 0)
 		          		currIndex.css('top', 0)
 		          		$('.active').first().css('transform', 'translateY(' + -(scrollPosition()-scroll_Top) + 'px)')
+		          		if(scrollPosition() > scroll_At) {
+		          			var yAxis = (scroll_Bottom - scrollPosition())
+		          			if(yAxis < 0) {
+		          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
+		          			}
+		          			var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
+		          			$('.scroll-overlay').css('opacity', fade)
+		          		}
 	          		} else {
 	          			active.first().prev('.scroll-item').addClass('active')
 	          			active.last().removeClass('active')
@@ -117,16 +125,6 @@
 	          				})
 	          			} 
 	          		}
-
-	          		if(scrollPosition() < scroll_At) {
-	          			var yAxis = (scroll_Bottom - scrollPosition())
-	          			if(yAxis < 0) {
-	          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
-	          			}
-	          			var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
-	          			$('.scroll-overlay').css('opacity', fade)
-	          		}
-	          		
 							}		          
 				    } else {
 		          if((scrollPosition()) >= scroll_Top && (scrollPosition() < scroll_Bottom)) {	         
