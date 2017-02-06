@@ -8,7 +8,7 @@
         <div class="scroll-overlay"></div>
         <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1400px;">
+            <div class="scroll-item__container" style="background: white; height: 1400px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -43,9 +43,9 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="background: red;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1500px;">
+            <div class="scroll-item__container" style="background: red; height: 1500px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -80,9 +80,9 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="background: green;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1400px;">
+            <div class="scroll-item__container" style="background: green; height: 1400px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -117,9 +117,9 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="background: blue;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1400px;">
+            <div class="scroll-item__container" style="background: blue; height: 1400px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -154,9 +154,9 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="background: blue;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1400px;">
+            <div class="scroll-item__container" style="background: blue; height: 1400px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
@@ -191,9 +191,9 @@
             </div>
           </div>
         </div>
-        <div class="scroll-item" style="background: blue;">
+        <div class="scroll-item">
           <div class="scroll-wrapper">
-            <div class="scroll-item__container" style="height: 1400px;">
+            <div class="scroll-item__container" style="background: yellow; height: 1400px;">
               <h1>Testing</h1>
               <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
               tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,

@@ -67,7 +67,6 @@
 				})
 
 				console.log(divPosition)
-
 				//// SET DYNAMIC Z-INDEXS ////
 				$.each(divPosition,function(i) {
 					$('.scroll-item').eq(i).css('z-index', divPosition[i]['index'])
@@ -101,38 +100,15 @@
 	          console.log(scrollPosition())
 
 				    if(delta > 0) {
-
-				    	// make sure we're not at the top of the page
-		          if(scrollPosition() > 0 ) {
-
-		          	if((scrollPosition() > scroll_Top) && (scrollPosition() < scroll_Bottom))  {
-		          		// is above the scrollAt position
-		          		if(scrollPosition() < scroll_At) {
-
-		          			if(scrollPosition() < scroll_Top) {
-		          				$('.active').first().css('transform', 'translateY(' + (scrollPosition()-scroll_Top) + 'px)')
-		          			}
-
-          					$('.active').first().css('transform', 'translateY(0px)')
-	          				$(currIndex).css('top', 0)
-
-
-		          		} else {
-		          			$('.active').first().css('top', 0)
-		          			var yAxis = (scroll_At - scrollPosition())
-		          			if(yAxis < 0) {
-		          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
-		          			}
-		          			var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
-		          			$('.scroll-overlay').css('opacity', fade)
-		          		}
+		          if(scrollPosition() >= 0) {
+		          	if((scrollPosition() >= scroll_Top) && (scrollPosition() < scroll_Bottom))  {
+		          		$('.active').first().css('top', 0)
+		          		currIndex.css('top', 0)
+		          		$('.active').first().css('transform', 'translateY(' + -(scrollPosition()-scroll_Top) + 'px)')
 	          		} else {
-	          			//// is below the scrollAt position
-
 	          			active.first().prev('.scroll-item').addClass('active')
 	          			active.last().removeClass('active')
 	          			active.first().next('.scroll-item').removeClass('active')
-
 	          			if(scrollPosition() < scroll_Bottom) {
 	          				counter = counter - 1
 	          				$('.scroll-overlay').css({
@@ -142,29 +118,33 @@
 	          			} 
 	          		}
 
+	          		if(scrollPosition() < scroll_At) {
+	          			var yAxis = (scroll_Bottom - scrollPosition())
+	          			if(yAxis < 0) {
+	          				$('.active').first().css('transform', 'translateY(' + yAxis + 'px)')
+	          			}
+	          			var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
+	          			$('.scroll-overlay').css('opacity', fade)
+	          		}
+	          		
 							}		          
-
 				    } else {
-
-		          if(scrollPosition() < divPosition[counter]['scrollAt']) {
-		          	// $(currIndex).css('top', (divPosition[counter]['top'] - scrollPosition())+'px')
-		          } 
-		          else {
-		          	var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
-		          	$('.scroll-overlay').css('opacity', fade)
-		          	$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['scrollAt']-scrollPosition()) + 'px)')
+		          if((scrollPosition()) >= scroll_Top && (scrollPosition() < scroll_Bottom)) {	         
+		          	$('.active').first().css('transform', 'translateY(' + (divPosition[counter]['top']-scrollPosition()) + 'px)')
+		          } else {
+		          	$('.scroll-item').eq(counter).css('top', -(windowHeight())+'px').removeClass('active')
+		          	$('.active').first().next().addClass('active')
+		          	counter = counter + 1
+		          	$('.scroll-overlay').css({
+		          		opacity: 1,
+		          		zIndex: overlay - counter
+		          	});
 		          }
 
-		         	if(scrollPosition() > divPosition[counter]['bottom']) {
-		         		$('.scroll-item').eq(counter).css('top', -(windowHeight())+'px').removeClass('active')
-		         		$('.active').first().next().addClass('active')
-		         		counter = counter + 1
-		         		$('.scroll-overlay').css({
-		         			opacity: 1,
-		         			zIndex: overlay - counter
-		         		});
-		         	}
-
+		          if(scrollPosition() > scroll_At) {
+		          	var fade = (divPosition[counter+1]['top']-scrollPosition())/windowHeight()
+		          	$('.scroll-overlay').css('opacity', fade)
+		          }
 				    }   
 				});
 
