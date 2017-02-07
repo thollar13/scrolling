@@ -1,58 +1,58 @@
 .scroll-viewer {
-  position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  overflow: hidden;
-  background: #FFF;
-}
+      position: relative;
+      top: 0;
+      left: 0;
+      width: 100%;
+      overflow: hidden;
+      background: #FFF;
+    }
 
-.scroll-wrap {
-    position: absolute;
-    top: 0;
-    left: 0;
-    height: 100%;
-    width: 100%;
-    overflow: hidden;
-    background: #fff;
-    z-index: 1;
-}
+    .scroll-wrap {
+        position: relative;
+        top: 0;
+        left: 0;
+        height: 100%;
+        width: 100%;
+        overflow: hidden;
+        background: #fff;
+        z-index: 1;
+    }
 
-.main-container {
-    position: absolute;
-    top: 0;
-    height: 100%;
-    left: 0px;
-    width: 100%;
-}
+    .main-container {
+        position: relative;
+        top: 0;
+        height: 100%;
+        left: 0px;
+        width: 100%;
+    }
 
-.scroll-overlay {
-    z-index: 6;
-    background: #000;
-    position: absolute;
-    height: 100%;
-    width: 100%;
-}
+    .scroll-overlay {
+        background: #000;
+        position: fixed;
+        height: 100%;
+        width: 100%;
+    }
 
-.scroll-wrapper {
-    position: relative;
-    top: 0;
-    left: 0;
-    width: 100%;
-    height: 100%;
-}
-.scroll-item { 
-    height: 100%;
-    top: (0-100vh);
-    z-index: 13;
-    background: white;
-    width: 100%;
-    position: relative;
-    min-height: 100vh;
-}
-.scroll-item__container {
-    position: relative;
-    width: 100%;
-    overflow: visible;
-}
-.active { top: 0 !important; }
+    .scroll-wrapper {
+        position: relative;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+    }
+    .scroll-item { 
+        /*height: 100%;*/
+        /*top: (0-100vh); */
+        background: white;
+        width: 100%;
+        position: relative;
+    }
+    .scroll-item__container {
+        position: relative;
+        width: 100%;
+        overflow: visible;
+        min-height: 100vh;
+        background: white;
+    }
+    .active { top: 0 !important; }
+    .clearfix { overflow: auto; }

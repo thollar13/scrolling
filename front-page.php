@@ -6,7 +6,7 @@
     <div class="scroll-wrap__container">
       <div class="main-container">
         <div class="scroll-overlay"></div>
-        <div class="scroll-item">
+        <div class="scroll-item" style="height: 2000px;">
           <div class="scroll-wrapper">
             <div class="scroll-item__container" style="background: white;">
               <h1>Testing</h1>
