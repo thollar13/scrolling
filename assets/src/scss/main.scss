@@ -16,9 +16,6 @@
     overflow: hidden;
     background: #fff;
     z-index: 1;
-    &__container {
-
-    }
 }
 
 .main-container {
@@ -51,15 +48,10 @@
     background: white;
     width: 100%;
     position: absolute;
-    &__container {
-        position: relative;
-        width: 100%;
-        overflow: visible;
-    }
+}
+.scroll-item__container {
+    position: relative;
+    width: 100%;
+    overflow: visible;
 }
 .active { top: 0 !important; }
-
-.stop-scrolling {
-  height: 100%;
-  overflow: hidden;
-}
