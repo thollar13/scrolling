@@ -42,7 +42,7 @@
 				    height = 0,
 				    counter = 0;
 
-				$('.scroll-item__container').each(function (i) {
+				$('.scroll-item').each(function (i) {
 					height = $(this).height();
 					var scrollAt = height - windowHeight();
 					//// MAKE SURE WE HAVE DEFINITIONS
@@ -66,6 +66,15 @@
 						scrollUpAt: top + windowHeight()
 					});
 				});
+				console.log(divPosition);
+
+				// setTimeout(function() {
+				// 	$('.scroll-item').css('position', 'absolute')
+				// 	$('.scroll-wrapper').css('position', 'absolute')
+				// 	$('.scroll-viewer').css('position', 'fixed')
+				// 	$('.scroll-wrap').css('position', 'absolute')
+				// 	console.log(divPosition)
+				// }, 3000)
 
 				//// SET DYNAMIC Z-INDEXS ////
 				$.each(divPosition, function (i) {
@@ -96,7 +105,7 @@
 					    scroll_Top = divPosition[counter]['top'];
 
 					var active = $('.active');
-
+					console.log(scrollPosition());
 					if (delta > 0) {
 						if (scrollPosition() >= 0) {
 							if (scrollPosition() >= scroll_Top && scrollPosition() < scroll_Bottom) {
@@ -115,13 +124,11 @@
 								}
 							} else {
 
+								//// if statement to prevent "active" from going off the page
 								active.first().prev('.scroll-item').addClass('active');
 								active.last().removeClass('active');
 								active.first().next('.scroll-item').removeClass('active');
-
-								if (counter == 5) {
-									$('.scroll-item').last().addClass('active');
-								}
+								////
 
 								if (scrollPosition() < scroll_Bottom) {
 									counter = counter - 1;
@@ -138,10 +145,10 @@
 						} else {
 							$('.scroll-item').eq(counter).css('top', -windowHeight() + 'px');
 
-							if ($('.scroll-item').last()) {
-								$('.scroll-item').eq(counter).removeClass('active');
-								$('.active').first().next().addClass('active');
-							}
+							//// if statement to prevent "active" from going off the page
+							$('.scroll-item').eq(counter).removeClass('active');
+							$('.active').first().next().addClass('active');
+							////
 
 							counter = counter + 1;
 							$('.scroll-overlay').css({
